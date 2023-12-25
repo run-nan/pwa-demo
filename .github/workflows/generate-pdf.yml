@@ -1,0 +1,28 @@
+name: Generate PDF
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Prince
+        run: |
+          curl https://www.princexml.com/download/prince-20231116-linux-generic-x86_64.tar.gz -O
+          tar zxf prince-20231116-linux-generic-x86_64.tar.gz
+          cd prince-20231116-linux-generic-x86_64
+          yes "" | sudo ./install.sh
+          
+      - name: Generate PDF
+        run: npx docusaurus-prince-pdf --url https://developer.ones.com/docs/openapi/ --output open-api.pdf
+
+      - name: Upload results
+        uses: actions/upload-artifact@v3
+        with:
+          name: open-api.zip
+          path: open-api.pdf
+          if-no-files-found: error
+
+          
