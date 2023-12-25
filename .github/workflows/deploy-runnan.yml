@@ -16,7 +16,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v3
         with:
-          ref: main
+          ref: master
       - name: Install pnpm
         uses: pnpm/action-setup@v2
       - name: Setup Node.js v16
